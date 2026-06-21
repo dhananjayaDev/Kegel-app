@@ -3,7 +3,7 @@
 {% block title %}Kegel Health — Anonymous ED Assessment{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=25">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=27">
 {% endblock %}
 
 {% block content %}
@@ -13,10 +13,10 @@
   <p class="hero-subtitle">{{ hero_subtitle }}</p>
 
   {% set hero_photos = hero_photos|default([
-    'images/pexels-lauraoliveira-18795817.jpg',
-    'images/pexels-n-voitkevich-4942801.jpg',
-    'images/pexels-natalya-velichenko-113472091-10405995.jpg',
-    'images/pexels-rebornfilmes-27366102.jpg',
+    'images/pexels-lauraoliveira-18795817.webp',
+    'images/pexels-n-voitkevich-4942801.webp',
+    'images/pexels-natalya-velichenko-113472091-10405995.webp',
+    'images/pexels-rebornfilmes-27366102.webp',
   ]) %}
   <div class="kegel-hero__photos">
     {% for photo in hero_photos %}
