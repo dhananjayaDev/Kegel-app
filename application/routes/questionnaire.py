@@ -6,10 +6,15 @@ from flask import Blueprint, current_app, redirect, render_template, request, se
 
 from application.components.layout import PageLayout
 from application.services.assessment_service import AssessmentService
-from application.services.quiz_helpers import flatten_questions
+from application.services.quiz_helpers import flatten_questions, options_side_by_side
 from application.utils.markdown import render_markdown
 
 questionnaire_bp = Blueprint("questionnaire", __name__)
+
+
+@questionnaire_bp.app_template_filter("options_side_by_side")
+def _options_side_by_side_filter(options: list) -> bool:
+    return options_side_by_side(options)
 
 DRAFT_KEY = "quiz_draft"
 MULTI_SELECT_IDS = {"q22"}

@@ -65,8 +65,25 @@
     }
   }
 
+  function updateViewportScroll() {
+    var viewport = document.getElementById("quiz-viewport");
+    if (!viewport) return;
+
+    viewport.scrollTop = 0;
+    viewport.classList.remove("is-scrollable");
+
+    window.requestAnimationFrame(function () {
+      if (viewport.scrollHeight > viewport.clientHeight + 1) {
+        viewport.classList.add("is-scrollable");
+      }
+    });
+  }
+
   function showSlide(index) {
     if (index < 0 || index >= slides.length) return;
+
+    var viewport = document.getElementById("quiz-viewport");
+    if (viewport) viewport.scrollTop = 0;
 
     slides.forEach(function (slide, i) {
       var active = i === index;
@@ -84,7 +101,7 @@
     current = index;
     updateProgress();
     updateNavButtons();
-    window.scrollTo(0, 0);
+    updateViewportScroll();
   }
 
   function validateSlide(slide) {
@@ -141,6 +158,8 @@
   form.addEventListener("submit", function (e) {
     if (!validateSlide(currentSlide())) e.preventDefault();
   });
+
+  window.addEventListener("resize", updateViewportScroll);
 
   showSlide(current);
 })();

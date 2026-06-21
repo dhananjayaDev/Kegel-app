@@ -5,7 +5,7 @@
 {% block body_class %}has-kegel-quiz{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=19">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=34">
 {% endblock %}
 
 {% block content %}
@@ -40,7 +40,7 @@
     >
       <h1 class="kegel-slide__question">{{ step.text }}</h1>
 
-      <div class="kegel-options{% if step.options|length <= 4 %} kegel-options--grid{% endif %}{% if errors and errors.get(step.id) %} has-error{% endif %}" id="block-{{ step.id }}">
+      <div class="kegel-options{% if step.options|options_side_by_side %} kegel-options--grid{% endif %}{% if errors and errors.get(step.id) %} has-error{% endif %}" id="block-{{ step.id }}">
         {% if step.type == 'multi_select' %}
           {% for opt in step.options %}
           <label class="kegel-option">
@@ -74,10 +74,6 @@
   </div>
 
   {% include 'components/quiz_nav.html' %}
-
-  <footer class="kegel-quiz__footer">
-    <p>For informational purposes only. Not medical advice.</p>
-  </footer>
 </form>
 {% endblock %}
 
@@ -87,5 +83,5 @@
   window.QUIZ_START = {{ active }};
   window.QUIZ_PROGRESS_OFFSET = {{ progress_offset|default(0) }};
 </script>
-<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=8"></script>
+<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=12"></script>
 {% endblock %}
