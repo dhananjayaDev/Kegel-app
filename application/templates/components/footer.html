@@ -1,6 +1,12 @@
 <footer class="site-footer">
   <div class="footer-inner">
-    <p class="footer-disclaimer">{{ footer.disclaimer }}</p>
+    <p class="footer-disclaimer">
+      {{ footer.disclaimer }} By choosing your age and continuing you agree to our
+      <a href="{{ url_for('main.terms') }}" class="footer-legal__link">Terms &amp; Conditions</a>
+      <span class="footer-legal__sep" aria-hidden="true">|</span>
+      <a href="{{ url_for('main.privacy') }}" class="footer-legal__link">Privacy Policy</a>.
+      Please review before continuing.
+    </p>
     <p class="footer-copy">&copy; {{ footer.year }} Kegel Health Assessment</p>
   </div>
 </footer>

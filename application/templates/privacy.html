@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy — Kegel Health{% endblock %}
+
+{% block content %}
+<section class="page-section legal-page">
+  <p class="hero-label">Legal</p>
+  <h1 class="page-title">Privacy Policy</h1>
+  <p class="page-lead">Last updated: June 2026</p>
+
+  <article class="prose legal-doc">
+    <p>
+      Kegel Health is designed to respect your privacy. This policy explains what information
+      is handled when you use our website, open-source codebase, Windows desktop app, and
+      Android mobile app, and how we protect it.
+    </p>
+
+    <h2>1. Privacy by design</h2>
+    <p>
+      The web assessment does <strong>not require an account</strong>, email address, name,
+      phone number, or payment information. We do not ask you to identify yourself to complete
+      the questionnaire.
+    </p>
+
+    <h2>2. Website data</h2>
+    <p>When you use the hosted website:</p>
+    <ul>
+      <li>
+        <strong>Questionnaire answers</strong> are processed to produce scores, triage pathways,
+        and optional exercise plans. During an active session, answers may be stored in a
+        temporary server-side session so you can continue the assessment and view results.
+      </li>
+      <li>
+        <strong>Session cookies</strong> are used only to maintain quiz progress and results
+        for your current visit. They are not used for advertising profiles.
+      </li>
+      <li>
+        Standard <strong>server logs</strong> (such as IP address, browser type, and request
+        time) may be recorded by the hosting provider for security and reliability. We do not
+        use these logs to build marketing profiles.
+      </li>
+    </ul>
+
+    <h2>3. Optional AI plan personalization</h2>
+    <p>
+      If cloud AI (for example, Google Gemini) is enabled on a deployment, anonymized
+      assessment details needed to personalize a Kegel plan may be sent to that provider
+      for processing. No name, email, or account identifier is included. If the service is
+      unavailable or rate-limited, a template-based plan is used instead.
+    </p>
+
+    <h2>4. Desktop and mobile apps</h2>
+    <p>
+      The Windows and Android applications are intended to run primarily on your device.
+      Assessment data in the apps is stored locally unless you choose a feature that
+      explicitly transmits data (for example, an optional sync or update check). Because the
+      apps are open source, you can review how data is handled in the published source code.
+    </p>
+
+    <h2>5. What we do not do</h2>
+    <ul>
+      <li>We do not sell your personal information.</li>
+      <li>We do not use the assessment for targeted advertising.</li>
+      <li>We do not require registration to use the core screening flow on the website.</li>
+    </ul>
+
+    <h2>6. Data retention</h2>
+    <p>
+      Website session data is temporary and tied to your browser session. It is not kept as
+      a permanent user profile on our servers. When you close the browser or the session
+      expires, that data is discarded. Local app data remains on your device until you
+      uninstall the app or clear app storage.
+    </p>
+
+    <h2>7. Open source transparency</h2>
+    <p>
+      This project is open source. Security researchers, contributors, and users can inspect
+      the code to verify how data flows through the website and applications. We encourage
+      responsible disclosure of privacy or security concerns via the repository.
+    </p>
+
+    <h2>8. Children</h2>
+    <p>
+      This service is intended for adults. It is not directed at children under 18, and we do
+      not knowingly collect personal information from children.
+    </p>
+
+    <h2>9. International users</h2>
+    <p>
+      If you access the hosted website from outside the country where it is operated, your
+      information may be processed where our hosting and optional AI providers operate, subject
+      to their infrastructure and applicable law.
+    </p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>
+      We may update this Privacy Policy as the project evolves. The “Last updated” date at the
+      top of this page will change when we do. Continued use after an update means you accept
+      the revised policy.
+    </p>
+
+    <h2>11. Contact</h2>
+    <p>
+      Privacy questions may be submitted through the project’s open-source repository issue
+      tracker or other contact method listed there.
+    </p>
+  </article>
+</section>
+{% endblock %}

@@ -379,9 +379,11 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
 }
 
 .home-quiz__form {
+  --home-quiz-y-gap: calc(var(--space-4) + var(--space-section));
   width: 100%;
   text-align: left;
   padding-top: var(--space-4);
+  padding-bottom: 0;
   margin-top: 0;
   border-top: 1px solid #eee;
 }
@@ -404,10 +406,13 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
   margin-bottom: var(--space-block);
 }
 
+.home-quiz__form .kegel-options {
+  margin-bottom: var(--home-quiz-y-gap);
+}
+
 .home-app-links {
-  margin-top: var(--space-section);
-  margin-bottom: 0;
-  padding: var(--space-5) var(--space-4) 0;
+  margin: 0;
+  padding: var(--home-quiz-y-gap) var(--space-4);
   border-top: 1px solid #eee;
   text-align: center;
 }
@@ -462,7 +467,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   width: 100%;
   max-width: 16rem;
   margin: 0 auto;
@@ -474,7 +479,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
   justify-content: center;
   gap: var(--space-2);
   width: 100%;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-4);
   font-size: var(--text-sm);
   font-weight: 600;
   line-height: var(--leading-snug);
@@ -512,7 +517,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
   .home-app-links__link {
     width: auto;
     white-space: nowrap;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-5);
   }
 }
 

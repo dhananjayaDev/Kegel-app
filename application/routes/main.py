@@ -84,3 +84,15 @@ def about():
         first_question=_get_first_question(),
     )
     return render_template("about.html", **ctx)
+
+
+@main_bp.route("/terms")
+def terms():
+    ctx = PageLayout.context(active_path="/terms")
+    return render_template("terms.html", **ctx)
+
+
+@main_bp.route("/privacy")
+def privacy():
+    ctx = PageLayout.context(active_path="/privacy")
+    return render_template("privacy.html", **ctx)
