@@ -1,15 +1,8 @@
 # Kegel Health Assessment
 
-<div align="center">
-
-<img src="application/static/images/pexels-lauraoliveira-18795817.webp" alt="Couple in a sunlit field" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
-<img src="application/static/images/pexels-n-voitkevich-4942801.webp" alt="Couple sharing a quiet moment" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
-<img src="application/static/images/pexels-natalya-velichenko-113472091-10405995.webp" alt="Couple outdoors in winter light" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
-<img src="application/static/images/pexels-rebornfilmes-27366102.webp" alt="Couple relaxing on a blanket at sunset" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
-
-</div>
-
-<br />
+<p align="center">
+  <img src="application/static/images/kegel-banner.png" alt="Kegel Health — wellness hero banner" width="100%">
+</p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
