@@ -1,6 +1,21 @@
 # Kegel Health Assessment
 
+<div align="center">
+
+<img src="application/static/images/pexels-lauraoliveira-18795817.webp" alt="Couple in a sunlit field" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
+<img src="application/static/images/pexels-n-voitkevich-4942801.webp" alt="Couple sharing a quiet moment" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
+<img src="application/static/images/pexels-natalya-velichenko-113472091-10405995.webp" alt="Couple outdoors in winter light" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
+<img src="application/static/images/pexels-rebornfilmes-27366102.webp" alt="Couple relaxing on a blanket at sunset" width="165" style="border-radius: 12px; margin: 0 -8px; vertical-align: middle;" />
+
+</div>
+
+<br />
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Anonymous Flask web app for clinical ED screening, pathway triage, and customized Kegel (PFMT) plan generation.
+
+**License:** This project is open source under the [MIT License](LICENSE). Copyright (c) 2026 Dhananjaya Dissanayake.
 
 ## Setup (local dev)
 
@@ -45,18 +60,18 @@ FLASK_DEBUG=0
 2. Add `GEMINI_API_KEY` in the dashboard
 3. Deploy — start command: `gunicorn app:app --bind 0.0.0.0:$PORT`
 
-After building desktop/APK, set download URLs:
+After publishing a desktop release on GitHub, set download URLs:
 
 ```env
-DESKTOP_APP_URL=https://your-cdn/KegelHealth-Setup.exe
-MOBILE_APP_URL=https://your-cdn/kegel-health.apk
+DESKTOP_APP_URL=https://github.com/dhananjayaDev/Kegel-app/releases/download/v1.0.0/KegelHealth-Setup.exe
+MOBILE_APP_URL=
 ```
 
 ---
 
 ## 2. Windows desktop + installer
 
-The desktop app embeds Flask in a native window (pywebview). The installer wizard explains **Ollama** setup.
+The desktop app embeds Flask in a native window (pywebview). The Inno Setup installer includes the app icon and an **Ollama** setup step for local AI plans.
 
 ### Build
 
@@ -66,8 +81,10 @@ The desktop app embeds Flask in a native window (pywebview). The installer wizar
 
 Outputs:
 
-- `desktop\dist\KegelHealth.exe` — portable
-- `dist\installer\KegelHealth-Setup.exe` — Inno Setup wizard (if Inno Setup 6 is installed)
+- `dist\KegelHealth.exe` — portable
+- `dist\installer\KegelHealth-Setup.exe` — Inno Setup wizard (requires [Inno Setup 6](https://jrsoftware.org/isinfo.php))
+
+Publish `KegelHealth-Setup.exe` as a [GitHub Release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) asset and point `DESKTOP_APP_URL` at the download link.
 
 ### End-user Ollama setup
 
@@ -125,6 +142,12 @@ MCP-style **provider registry** dispatches modular services:
 
 Responses are stored in the Flask session only (browser cookie). No database, no accounts, no PII collection.
 
+## License
+
+Released under the [MIT License](LICENSE).
+
+You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the conditions in `LICENSE`. The above copyright notice and permission notice must be included in all copies or substantial portions.
+
 ## Disclaimer
 
-For informational purposes only. Not medical advice. See `ResearchDoc.md` and `Questionnaire.md` for clinical logic reference.
+For informational purposes only. Not medical advice. The MIT License does not provide medical, legal, or clinical warranties. See `ResearchDoc.md` and `Questionnaire.md` for clinical logic reference.
