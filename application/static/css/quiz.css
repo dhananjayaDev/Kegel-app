@@ -27,8 +27,12 @@ html {
   --header-logo: 32px;
   --kegel-choice-pad-y: 0.875rem;
   --kegel-choice-pad-x: 1rem;
+  --kegel-choice-font: var(--text-base);
   --kegel-choice-radius: 14px;
   --kegel-choice-gap: 0.625rem;
+  --kegel-nav-pad-y: 0.9375rem;
+  --kegel-nav-pad-x: 2rem;
+  --kegel-nav-font: var(--text-sm);
 }
 
 body {
@@ -62,8 +66,6 @@ body.has-kegel-quiz {
 
 body.has-kegel-quiz .site-header {
   flex-shrink: 0;
-  padding: var(--space-2) var(--space-page-x);
-  padding-top: max(var(--space-2), env(safe-area-inset-top, 0px));
 }
 
 body.has-kegel-quiz .site-footer {
@@ -151,24 +153,30 @@ body.has-kegel-quiz .main-content {
 .kegel-quiz__nav {
   flex-shrink: 0;
   margin-top: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: stretch;
-  gap: var(--kegel-choice-gap);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
   width: 100%;
   padding: var(--space-3) 0 max(var(--space-2), env(safe-area-inset-bottom, 0px));
   background: #fff;
 }
 
+body.has-kegel-quiz .kegel-quiz__nav {
+  padding: var(--space-3) 0 max(var(--space-5), calc(env(safe-area-inset-bottom, 0px) + var(--space-4)));
+}
+
 .kegel-quiz__nav .kegel-btn {
-  width: 100%;
-  padding: var(--kegel-choice-pad-y) var(--kegel-choice-pad-x);
-  border-radius: var(--kegel-choice-radius);
-  font-size: var(--text-base);
+  width: auto;
+  flex: 0 0 auto;
+  padding: var(--kegel-nav-pad-y) var(--kegel-nav-pad-x);
+  border-radius: 999px;
+  font-size: var(--kegel-nav-font);
   font-weight: 600;
   line-height: var(--leading-snug);
   min-height: unset;
   border: 2px solid transparent;
+  white-space: nowrap;
 }
 
 .kegel-quiz__nav [hidden] {
@@ -414,6 +422,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  min-height: 2.75rem;
   padding: var(--kegel-choice-pad-y) var(--kegel-choice-pad-x);
   background: #e8f3fc;
   border: 2px solid transparent;
@@ -422,7 +431,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
 }
 
 .kegel-option__text {
-  font-size: var(--text-base);
+  font-size: var(--kegel-choice-font);
   font-weight: 600;
   line-height: var(--leading-snug);
   text-align: left;
@@ -570,8 +579,7 @@ a.kegel-btn:hover {
     font-size: var(--text-xs);
   }
 
-  .kegel-option__body,
-  .kegel-quiz__nav .kegel-btn {
+  .kegel-option__body {
     padding: var(--space-4) var(--space-5);
   }
 }

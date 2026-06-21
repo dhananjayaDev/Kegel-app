@@ -1146,6 +1146,10 @@ a {
   .brand-tagline {
     font-size: var(--text-sm);
   }
+
+  .btn-nav {
+    padding: 0.75rem 1.625rem;
+  }
 }
 
 @media (max-width: 768px) {
