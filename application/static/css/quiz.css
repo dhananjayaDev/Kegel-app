@@ -495,8 +495,11 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
 
 .home-app-links__link--pending {
   color: #666;
-  cursor: default;
-  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.home-app-links__link--pending:hover {
+  opacity: 1;
 }
 
 .home-app-links__icon {

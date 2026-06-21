@@ -13,4 +13,6 @@ app = create_app()
 
 if __name__ == "__main__":
     debug = app.config.get("DEBUG", False)
-    app.run(host="0.0.0.0", port=5000, debug=debug, use_reloader=debug)
+    host = app.config.get("HOST", "0.0.0.0")
+    port = app.config.get("PORT", 5000)
+    app.run(host=host, port=port, debug=debug, use_reloader=debug)

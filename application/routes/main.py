@@ -1,9 +1,11 @@
 """Main site routes."""
 
-from flask import Blueprint, current_app, redirect, render_template, request, session, url_for
+from flask import Blueprint, current_app, jsonify, redirect, render_template, request, send_file, session, url_for
 
 from application.components.layout import PageLayout
 from application.providers.registry import ProviderRegistry
+from application.config import Config
+from application.services.download_links import find_desktop_installer
 from application.services.quiz_helpers import first_question, flatten_questions
 from application.services.research_doc import research_doc_html
 
@@ -80,7 +82,7 @@ def start_assessment():
 def about():
     ctx = PageLayout.context(
         active_path="/about",
-        research_html=research_doc_html(),
+        research_html=research_doc_html(current_app.config["BASE_DIR"]),
         first_question=_get_first_question(),
     )
     return render_template("about.html", **ctx)
@@ -96,3 +98,47 @@ def terms():
 def privacy():
     ctx = PageLayout.context(active_path="/privacy")
     return render_template("privacy.html", **ctx)
+
+
+@main_bp.route("/download/desktop")
+def download_desktop():
+    installer = find_desktop_installer(Config.BASE_DIR)
+    if not installer:
+        return redirect(url_for("main.index"))
+    return send_file(
+        installer,
+        as_attachment=True,
+        download_name=installer.name,
+    )
+
+
+@main_bp.route("/api/llm/status")
+def llm_status_api():
+    from application.services.llm_status import llm_status
+
+    return jsonify(llm_status(current_app.config))
+
+
+@main_bp.route("/settings", methods=["GET", "POST"])
+def settings():
+    deployment = current_app.config.get("APP_DEPLOYMENT", "web")
+    if deployment not in ("desktop", "android"):
+        return redirect(url_for("main.index"))
+
+    saved = False
+    if request.method == "POST":
+        base_url = (request.form.get("ollama_base_url") or "").strip()
+        model = (request.form.get("ollama_model") or "").strip()
+        if base_url:
+            session["ollama_base_url"] = base_url
+        if model:
+            session["ollama_model"] = model
+        saved = True
+
+    ctx = PageLayout.context(
+        active_path="/settings",
+        ollama_base_url=session.get("ollama_base_url", current_app.config.get("OLLAMA_BASE_URL", "")),
+        ollama_model=session.get("ollama_model", current_app.config.get("OLLAMA_MODEL", "")),
+        settings_saved=saved,
+    )
+    return render_template("settings.html", **ctx)

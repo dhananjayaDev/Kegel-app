@@ -4,3 +4,16 @@ __pycache__/
 .env
 *.egg-info/
 .pytest_cache/
+# Build output — do not commit; host via GitHub Release or serve locally from dist/
+desktop/dist/
+desktop/build/
+dist/
+build/
+!desktop/assets/kegel.ico
+android/app/build/
+android/.gradle/
+android/app/src/main/python/application/
+android/app/src/main/python/data/
+android/local.properties
+# Optional: commit a release binary here instead of dist/
+# !application/static/downloads/*.exe

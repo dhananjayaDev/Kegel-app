@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Local LLM Settings — Kegel Health{% endblock %}
+
+{% block content %}
+<section class="page-section legal-page">
+  <p class="hero-label">Settings</p>
+  <h1 class="page-title">Local LLM connection</h1>
+  <p class="page-lead">
+    Point the app at Ollama on this device or on your home network. Plans use a local model when
+    available; otherwise the app falls back to a built-in template.
+  </p>
+
+  {% if settings_saved %}
+  <p class="settings-notice">Settings saved for this session.</p>
+  {% endif %}
+
+  <article class="prose legal-doc settings-form-wrap">
+    <form method="post" class="settings-form">
+      <label for="ollama_base_url">Ollama URL</label>
+      <input
+        id="ollama_base_url"
+        name="ollama_base_url"
+        type="url"
+        value="{{ ollama_base_url }}"
+        placeholder="http://127.0.0.1:11434"
+        required
+      >
+
+      <label for="ollama_model">Preferred model</label>
+      <input
+        id="ollama_model"
+        name="ollama_model"
+        type="text"
+        value="{{ ollama_model }}"
+        placeholder="llama3.2"
+        required
+      >
+
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <h2>Status</h2>
+    <ul>
+      <li><strong>Deployment:</strong> {{ llm_status.deployment }}</li>
+      <li><strong>Ollama detected:</strong> {{ "Yes" if llm_status.ollama.available else "No" }}</li>
+      {% if llm_status.ollama.available %}
+      <li><strong>Using:</strong> {{ llm_status.ollama.selected_model }} @ {{ llm_status.ollama.base_url }}</li>
+      {% endif %}
+      {% if llm_status.ollama.models %}
+      <li><strong>Installed models:</strong> {{ llm_status.ollama.models | join(", ") }}</li>
+      {% endif %}
+      <li><strong>Active chain:</strong> {{ llm_status.active_chain | join(" → ") if llm_status.active_chain else "Template only" }}</li>
+    </ul>
+
+    <h2>Desktop</h2>
+    <p>
+      Install <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a>,
+      then run <code>ollama pull llama3.2</code> (or another model listed above).
+    </p>
+
+    <h2>Android</h2>
+    <p>
+      On a phone, local LLM options include running Ollama on a PC on the same Wi‑Fi and setting
+      the URL to <code>http://YOUR-PC-IP:11434</code>, or using Termux with Ollama on supported
+      devices. The app probes common local addresses automatically.
+    </p>
+  </article>
+</section>
+{% endblock %}

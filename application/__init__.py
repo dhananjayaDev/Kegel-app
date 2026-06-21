@@ -3,6 +3,8 @@
 from flask import Flask, request, session
 
 from application.config import Config
+from application.services.download_links import resolve_download_links
+from application.services.llm_status import llm_status
 from application.providers import ProviderRegistry
 from application.routes.main import main_bp
 from application.routes.questionnaire import questionnaire_bp
@@ -21,11 +23,18 @@ def create_app(config_class: type = Config) -> Flask:
     def _inject_site_context() -> dict:
         if request.args.get("llm_limited") == "1":
             session["llm_limit_notice"] = True
+        links = resolve_download_links(app.config)
         return {
-            "desktop_app_url": app.config.get("DESKTOP_APP_URL", ""),
-            "mobile_app_url": app.config.get("MOBILE_APP_URL", ""),
+            "desktop_app_url": links["desktop_app_url"],
+            "mobile_app_url": links["mobile_app_url"],
+            "desktop_download_available": links["desktop_download_available"],
+            "mobile_download_available": links["mobile_download_available"],
+            "mobile_download_message": links["mobile_download_message"],
             "llm_limit_notice": session.get("llm_limit_notice", False),
             "has_saved_assessment": bool(session.get("assessment")),
+            "app_deployment": app.config.get("APP_DEPLOYMENT", "web"),
+            "llm_status": llm_status(app.config),
+            "show_llm_settings": app.config.get("APP_DEPLOYMENT", "web") in ("desktop", "android"),
         }
 
     app.register_blueprint(main_bp)

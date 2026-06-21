@@ -6,7 +6,7 @@ from typing import Any
 
 from application.llm.errors import LLMRateLimitError
 from application.llm.factory import LLMFactory
-from application.models import AssessmentResult, Demographics, ScoringResult, TriageResult
+from application.models import Demographics, ScoringResult, TriageResult
 from application.providers.base import BaseProvider
 from application.services.protocols import ProtocolLibrary
 
@@ -25,7 +25,9 @@ class PlanGenerator:
     def __init__(self, config: Any) -> None:
         self._config = config
         self._protocols = ProtocolLibrary()
-        self._llm = LLMFactory.create(config)
+
+    def _llm_chain(self):
+        return LLMFactory.build_chain(self._config)
 
     def base_protocol(self, scoring: ScoringResult) -> dict:
         return self._protocols.for_severity(scoring.severity)
@@ -115,20 +117,25 @@ Avoid tensing abdomen, buttocks, or holding your breath.
         protocol = self.base_protocol(scoring)
         template = self._build_template_plan(demographics, scoring, triage, protocol)
 
-        if not self._llm:
+        if not self._llm_chain():
             return template, "template", protocol, False
 
-        try:
-            customized = self._llm.generate(
-                self.SYSTEM_PROMPT,
-                self._build_llm_prompt(demographics, scoring, triage, protocol, answers),
-            )
-            if customized:
-                return customized, self._config.LLM_PROVIDER, protocol, False
-        except LLMRateLimitError:
+        prompt = self._build_llm_prompt(demographics, scoring, triage, protocol, answers)
+        rate_limited = False
+
+        for resolved in self._llm_chain():
+            try:
+                customized = resolved.client.generate(self.SYSTEM_PROMPT, prompt)
+                if customized:
+                    return customized, resolved.label, protocol, False
+            except LLMRateLimitError:
+                rate_limited = True
+                continue
+            except Exception:
+                continue
+
+        if rate_limited:
             return template, "template (rate limited)", protocol, True
-        except Exception:
-            pass
 
         return template, "template (LLM unavailable)", protocol, False
 

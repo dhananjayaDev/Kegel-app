@@ -513,10 +513,21 @@ def _render_references(refs: list[Reference]) -> str:
     )
 
 
-def research_doc_html(data_dir: Path | None = None) -> str:
+def research_doc_html(base_dir: Path | None = None) -> str:
     """Return sanitized HTML for the full research document."""
-    root = data_dir or Path(__file__).resolve().parent.parent.parent
-    path = root / "ResearchDoc.md"
+    if base_dir is None:
+        from application.config import Config
+
+        base_dir = Config.BASE_DIR
+
+    path = base_dir / "ResearchDoc.md"
+    if not path.is_file():
+        return (
+            '<p class="research-doc__missing">'
+            "Research documentation is unavailable in this build."
+            "</p>"
+        )
+
     text = path.read_text(encoding="utf-8")
     body_lines, ref_lines = _split_body_and_references(text)
     refs = _parse_references(ref_lines)

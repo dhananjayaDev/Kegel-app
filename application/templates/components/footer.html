@@ -7,6 +7,11 @@
       <a href="{{ url_for('main.privacy') }}" class="footer-legal__link">Privacy Policy</a>.
       Please review before continuing.
     </p>
-    <p class="footer-copy">&copy; {{ footer.year }} Kegel Health Assessment</p>
+    <p class="footer-copy">&copy; {{ footer.year }} Kegel Health Assessment
+      {% if show_llm_settings %}
+      <span class="footer-legal__sep" aria-hidden="true">|</span>
+      <a href="{{ url_for('main.settings') }}" class="footer-legal__link">Local LLM settings</a>
+      {% endif %}
+    </p>
   </div>
 </footer>

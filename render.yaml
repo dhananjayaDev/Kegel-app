@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: kegel-health
+    runtime: python
+    buildCommand: pip install -r requirements.txt -r requirements-hosting.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: APP_DEPLOYMENT
+        value: web
+      - key: LLM_PROVIDER
+        value: auto
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FLASK_SECRET_KEY
+        generateValue: true

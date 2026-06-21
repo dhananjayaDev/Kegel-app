@@ -17,8 +17,9 @@
   <div class="home-app-links__actions">
     <a
       href="{{ desktop_app_url or '#' }}"
-      class="home-app-links__link{% if not desktop_app_url %} home-app-links__link--pending{% endif %}"
-      {% if desktop_app_url %}target="_blank" rel="noopener noreferrer"{% else %}aria-disabled="true" tabindex="-1"{% endif %}
+      class="home-app-links__link{% if not desktop_download_available %} home-app-links__link--pending{% endif %}"
+      {% if desktop_download_available %}download{% endif %}
+      {% if not desktop_download_available %}aria-disabled="true" tabindex="-1"{% endif %}
     >
       <img
         src="{{ url_for('static', filename='icons/laptop.svg') }}"
@@ -28,12 +29,14 @@
         height="20"
         aria-hidden="true"
       >
-      Download desktop app
+      Download Desktop App
     </a>
+    {% if mobile_download_available %}
     <a
-      href="{{ mobile_app_url or '#' }}"
-      class="home-app-links__link{% if not mobile_app_url %} home-app-links__link--pending{% endif %}"
-      {% if mobile_app_url %}target="_blank" rel="noopener noreferrer"{% else %}aria-disabled="true" tabindex="-1"{% endif %}
+      href="{{ mobile_app_url }}"
+      class="home-app-links__link"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       <img
         src="{{ url_for('static', filename='icons/device-mobile.svg') }}"
@@ -43,7 +46,25 @@
         height="20"
         aria-hidden="true"
       >
-      Download mobile app
+      Download Mobile App
     </a>
+    {% else %}
+    <span
+      class="home-app-links__link home-app-links__link--pending"
+      title="Coming soon"
+      aria-disabled="true"
+      role="link"
+    >
+      <img
+        src="{{ url_for('static', filename='icons/device-mobile.svg') }}"
+        class="home-app-links__icon"
+        alt=""
+        width="20"
+        height="20"
+        aria-hidden="true"
+      >
+      Download Mobile App
+    </span>
+    {% endif %}
   </div>
 </div>
