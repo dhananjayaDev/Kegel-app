@@ -5,30 +5,64 @@
   if (!form) return;
 
   var slides = Array.prototype.slice.call(form.querySelectorAll(".kegel-slide"));
+  var nav = document.getElementById("quiz-nav");
   var progressFill = document.getElementById("progress-fill");
   var progressPct = document.getElementById("progress-pct");
   var total = window.QUIZ_TOTAL || slides.length;
   var offset = window.QUIZ_PROGRESS_OFFSET || 0;
   var current = typeof window.QUIZ_START === "number" ? window.QUIZ_START : 0;
 
+  if (!nav) return;
   if (current < 0 || current >= slides.length) current = 0;
+
+  var backBtn = nav.querySelector(".btn-back");
+  var nextBtn = nav.querySelector(".btn-next");
+  var submitBtn = nav.querySelector(".btn-submit");
 
   function currentSlide() {
     return slides[current];
-  }
-
-  function isMulti(slide) {
-    return slide.getAttribute("data-multi") === "true";
   }
 
   function isLast() {
     return current === slides.length - 1;
   }
 
+  function isAnswered(slide) {
+    var radios = slide.querySelectorAll('input[type="radio"]');
+    if (radios.length) {
+      var name = radios[0].name;
+      return !!slide.querySelector('input[name="' + name + '"]:checked');
+    }
+
+    var checks = slide.querySelectorAll('input[type="checkbox"]');
+    if (checks.length) {
+      var cname = checks[0].name;
+      return !!slide.querySelector('input[name="' + cname + '"]:checked');
+    }
+
+    return false;
+  }
+
   function updateProgress() {
     var pct = Math.round(((offset + current + 1) / total) * 100);
     if (progressFill) progressFill.style.width = pct + "%";
     if (progressPct) progressPct.textContent = pct + "%";
+  }
+
+  function updateNavButtons() {
+    var slide = currentSlide();
+    if (!slide) return;
+
+    var answered = isAnswered(slide);
+
+    if (nextBtn) {
+      nextBtn.hidden = isLast();
+      nextBtn.disabled = !answered;
+    }
+    if (submitBtn) {
+      submitBtn.hidden = !isLast();
+      submitBtn.disabled = !answered;
+    }
   }
 
   function showSlide(index) {
@@ -49,6 +83,7 @@
 
     current = index;
     updateProgress();
+    updateNavButtons();
     window.scrollTo(0, 0);
   }
 
@@ -56,22 +91,9 @@
     var options = slide.querySelector(".kegel-options");
     if (options) options.classList.remove("has-error");
 
-    var radios = slide.querySelectorAll('input[type="radio"][required]');
-    if (radios.length) {
-      var name = radios[0].name;
-      if (!slide.querySelector('input[name="' + name + '"]:checked')) {
-        if (options) options.classList.add("has-error");
-        return false;
-      }
-    }
-
-    var checks = slide.querySelectorAll('input[type="checkbox"]');
-    if (checks.length) {
-      var cname = checks[0].name;
-      if (!slide.querySelector('input[name="' + cname + '"]:checked')) {
-        if (options) options.classList.add("has-error");
-        return false;
-      }
+    if (!isAnswered(slide)) {
+      if (options) options.classList.add("has-error");
+      return false;
     }
 
     return true;
@@ -83,7 +105,11 @@
   }
 
   function goBack() {
-    if (current > 0) showSlide(current - 1);
+    if (current === 0) {
+      window.location.href = "/";
+      return;
+    }
+    showSlide(current - 1);
   }
 
   form.addEventListener("change", function (e) {
@@ -96,22 +122,17 @@
     var options = slide.querySelector(".kegel-options");
     if (options) options.classList.remove("has-error");
 
-    if (input.type === "radio" && !isMulti(slide) && !isLast()) {
-      window.setTimeout(goNext, 280);
-    }
+    updateNavButtons();
   });
 
   form.addEventListener("click", function (e) {
-    if (e.target.classList.contains("btn-back-home")) {
+    if (e.target.closest(".btn-next")) {
       e.preventDefault();
-      window.location.href = "/";
+      if (nextBtn && !nextBtn.disabled) goNext();
       return;
     }
-    if (e.target.classList.contains("btn-next")) {
-      e.preventDefault();
-      goNext();
-    }
-    if (e.target.classList.contains("btn-back")) {
+
+    if (e.target.closest(".btn-back")) {
       e.preventDefault();
       goBack();
     }

@@ -2,6 +2,10 @@
 
 {% block title %}How it works — Kegel Health{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=13">
+{% endblock %}
+
 {% block content %}
 <section class="page-section page-section--research">
   <p class="hero-label">Clinical foundation</p>
@@ -14,8 +18,12 @@
     {{ research_html|safe }}
   </article>
 
-  <div class="research-doc__actions">
-    <a href="{{ url_for('main.index') }}#start-quiz" class="btn btn-primary btn-lg">Begin assessment</a>
+  <div class="research-doc__actions research-doc__quiz-start">
+    {% include 'components/first_question_form.html' %}
   </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/home_quiz.js') }}?v=2"></script>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Kegel Health — Anonymous ED Assessment{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=13">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=25">
 {% endblock %}
 
 {% block content %}
@@ -30,44 +30,49 @@
     {% endfor %}
   </div>
 
-  <ul class="kegel-trust">
-    <li><strong>Evidence-based</strong> clinical scoring</li>
-    <li><strong>100%</strong> anonymous</li>
-    <li><strong>{{ total_steps }}</strong> screening questions</li>
-  </ul>
-
-  <form id="home-quiz-form" class="home-quiz__form" method="post" action="{{ url_for('main.start_assessment') }}">
-    <h2 class="home-quiz__question">{{ first_question.text }}</h2>
-    <p class="home-quiz__hint">Select an option to continue the assessment</p>
-    <div class="kegel-options kegel-options--stack">
-      {% for opt in first_question.options %}
-      <label class="kegel-option">
-        <input type="radio" name="age_group" value="{{ opt.value }}" required>
-        <span class="kegel-option__body">
-            <span class="kegel-option__text">{{ opt.label }}</span>
-            {% include 'components/option_caret.html' %}
-        </span>
-      </label>
-      {% endfor %}
+  <section class="features features--before-quiz" aria-labelledby="why-assessment-heading">
+    <h2 class="features__heading" id="why-assessment-heading">Why this assessment matters</h2>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <img
+          src="{{ url_for('static', filename='icons/percent.svg') }}"
+          class="feature-card__icon"
+          alt=""
+          width="32"
+          height="32"
+          aria-hidden="true"
+        >
+        <h3>Clinical scoring</h3>
+        <p>IIEF-EF domain scoring with etiology mapping based on validated triage algorithms, Evidence-based clinical scoring.</p>
+      </article>
+      <article class="feature-card">
+        <img
+          src="{{ url_for('static', filename='icons/fingerprint.svg') }}"
+          class="feature-card__icon"
+          alt=""
+          width="32"
+          height="32"
+          aria-hidden="true"
+        >
+        <h3>Personalized pathway</h3>
+        <p>Routes you to PFMT, therapy referral, or specialist care based on your profile, 100% anonymous.</p>
+      </article>
+      <article class="feature-card">
+        <img
+          src="{{ url_for('static', filename='icons/note.svg') }}"
+          class="feature-card__icon"
+          alt=""
+          width="32"
+          height="32"
+          aria-hidden="true"
+        >
+        <h3>Custom Kegel plan</h3>
+        <p>AI-personalized pelvic floor protocol adapted to your age group and severity, {{ total_steps }} screening questions.</p>
+      </article>
     </div>
-  </form>
-</section>
+  </section>
 
-<section class="features features--below-quiz">
-  <div class="feature-grid">
-    <article class="feature-card">
-      <h2>Clinical scoring</h2>
-      <p>IIEF-EF domain scoring with etiology mapping based on validated triage algorithms.</p>
-    </article>
-    <article class="feature-card">
-      <h2>Personalized pathway</h2>
-      <p>Routes you to PFMT, therapy referral, or specialist care based on your profile.</p>
-    </article>
-    <article class="feature-card">
-      <h2>Custom Kegel plan</h2>
-      <p>AI-personalized pelvic floor protocol adapted to your age group and severity.</p>
-    </article>
-  </div>
+  {% include 'components/first_question_form.html' %}
 </section>
 {% endblock %}
 

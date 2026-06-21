@@ -1,6 +1,12 @@
-{% extends "quiz_base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Assessment — Kegel Health{% endblock %}
+
+{% block body_class %}has-kegel-quiz{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=19">
+{% endblock %}
 
 {% block content %}
 {% set draft = draft|default({}) %}
@@ -16,18 +22,12 @@
   <p class="kegel-slide__error kegel-form-error">{{ errors['_form'][0] }}</p>
   {% endif %}
 
-  <header class="kegel-quiz__header">
-    <a href="{{ url_for('main.index') }}" class="kegel-brand">
-      <span class="kegel-brand__mark">K</span>
-      <span class="kegel-brand__name">Kegel Health</span>
-    </a>
-    <div class="kegel-quiz__progress">
-      <div class="kegel-quiz__progress-track">
-        <div class="kegel-quiz__progress-fill" id="progress-fill"></div>
-      </div>
-      <span class="kegel-quiz__progress-pct" id="progress-pct">0%</span>
+  <div class="kegel-quiz__progress">
+    <div class="kegel-quiz__progress-track">
+      <div class="kegel-quiz__progress-fill" id="progress-fill"></div>
     </div>
-  </header>
+    <span class="kegel-quiz__progress-pct" id="progress-pct">0%</span>
+  </div>
 
   <div class="kegel-quiz__viewport" id="quiz-viewport">
     {% for step in steps %}
@@ -69,37 +69,11 @@
       {% if errors and errors.get(step.id) %}
       <p class="kegel-slide__error">Please select an answer to continue.</p>
       {% endif %}
-
-      {% if step.type == 'multi_select' %}
-      <div class="kegel-slide__actions">
-        {% if loop.first and progress_offset %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
-        {% elif not loop.first %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
-        {% endif %}
-        <button type="button" class="kegel-btn kegel-btn--primary btn-next">Continue →</button>
-      </div>
-      {% elif loop.last %}
-      <div class="kegel-slide__actions kegel-slide__actions--submit">
-        {% if loop.first and progress_offset %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
-        {% elif not loop.first %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
-        {% endif %}
-        <button type="submit" class="kegel-btn kegel-btn--primary btn-submit">See my results →</button>
-      </div>
-      {% else %}
-      <div class="kegel-slide__actions">
-        {% if loop.first and progress_offset %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
-        {% elif not loop.first %}
-        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
-        {% endif %}
-      </div>
-      {% endif %}
     </section>
     {% endfor %}
   </div>
+
+  {% include 'components/quiz_nav.html' %}
 
   <footer class="kegel-quiz__footer">
     <p>For informational purposes only. Not medical advice.</p>
@@ -113,5 +87,5 @@
   window.QUIZ_START = {{ active }};
   window.QUIZ_PROGRESS_OFFSET = {{ progress_offset|default(0) }};
 </script>
-<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=5"></script>
+<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=8"></script>
 {% endblock %}

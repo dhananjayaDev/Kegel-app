@@ -30,6 +30,7 @@ def _quiz_context(sections: list, **extra) -> dict:
     skip = 1 if draft.get("age_group") else 0
     steps = all_steps[skip:]
     return {
+        **PageLayout.context(active_path="/assessment/"),
         "sections": sections,
         "steps": steps,
         "total_steps": len(all_steps),

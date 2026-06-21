@@ -1,0 +1,15 @@
+<form id="home-quiz-form" class="home-quiz__form" method="post" action="{{ url_for('main.start_assessment') }}">
+  <h2 class="home-quiz__question">{{ first_question.text }}</h2>
+  <p class="home-quiz__hint">Select an option to continue the assessment</p>
+  <div class="kegel-options kegel-options--stack">
+    {% for opt in first_question.options %}
+    <label class="kegel-option">
+      <input type="radio" name="age_group" value="{{ opt.value }}" required>
+      <span class="kegel-option__body">
+        <span class="kegel-option__text">{{ opt.label }}</span>
+        {% include 'components/option_caret.html' %}
+      </span>
+    </label>
+    {% endfor %}
+  </div>
+</form>

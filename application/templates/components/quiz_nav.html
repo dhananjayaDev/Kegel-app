@@ -1,0 +1,32 @@
+<nav class="kegel-quiz__nav" id="quiz-nav" aria-label="Question navigation">
+  <button type="button" class="kegel-btn kegel-btn--ghost btn-back">
+    <img
+      src="{{ url_for('static', filename='icons/arrow-left.svg') }}"
+      class="kegel-btn__icon kegel-btn__icon--left"
+      alt=""
+      width="18"
+      height="18"
+    >
+    Back
+  </button>
+  <button type="button" class="kegel-btn kegel-btn--primary btn-next" disabled>
+    Next
+    <img
+      src="{{ url_for('static', filename='icons/arrow-right.svg') }}"
+      class="kegel-btn__icon kegel-btn__icon--right"
+      alt=""
+      width="18"
+      height="18"
+    >
+  </button>
+  <button type="submit" class="kegel-btn kegel-btn--primary btn-submit" disabled hidden>
+    See my results
+    <img
+      src="{{ url_for('static', filename='icons/arrow-right.svg') }}"
+      class="kegel-btn__icon kegel-btn__icon--right"
+      alt=""
+      width="18"
+      height="18"
+    >
+  </button>
+</nav>

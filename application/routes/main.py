@@ -16,24 +16,36 @@ def _sections():
     return registry.invoke("questionnaire", {"action": "sections"})
 
 
+def _default_first_question():
+    return {
+        "id": "age_group",
+        "text": "What is your age group?",
+        "options": [
+            {"value": "under_30", "label": "Under 30"},
+            {"value": "30_39", "label": "30–39"},
+            {"value": "40_49", "label": "40–49"},
+            {"value": "50_59", "label": "50–59"},
+            {"value": "60_plus", "label": "60 and over"},
+        ],
+    }
+
+
+def _get_first_question():
+    fq = first_question(_sections())
+    return fq or _default_first_question()
+
+
+@main_bp.context_processor
+def _inject_quiz_context():
+    return {"first_question": _get_first_question()}
+
+
 @main_bp.route("/")
 def index():
     session.pop(DRAFT_KEY, None)
     sections = _sections()
     steps = flatten_questions(sections)
-    fq = first_question(sections)
-    if not fq:
-        fq = {
-            "id": "age_group",
-            "text": "What is your age group?",
-            "options": [
-                {"value": "under_30", "label": "Under 30"},
-                {"value": "30_39", "label": "30–39"},
-                {"value": "40_49", "label": "40–49"},
-                {"value": "50_59", "label": "50–59"},
-                {"value": "60_plus", "label": "60 and over"},
-            ],
-        }
+    fq = _get_first_question()
     ctx = PageLayout.context(
         active_path="/",
         hero_label="Understand your profile today",
@@ -67,5 +79,6 @@ def about():
     ctx = PageLayout.context(
         active_path="/about",
         research_html=research_doc_html(),
+        first_question=_get_first_question(),
     )
     return render_template("about.html", **ctx)
