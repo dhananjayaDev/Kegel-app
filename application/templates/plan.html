@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Your Kegel Plan — Kegel Health{% endblock %}
+
+{% block content %}
+<section class="page-section plan-page">
+  <div class="plan-header">
+    <p class="hero-label">Personalized protocol</p>
+    <h1 class="page-title">Your customized Kegel plan</h1>
+    <p class="meta-text">Generated via {{ result.plan_source }} · IIEF-EF {{ result.scoring.iief_ef_score }}/30</p>
+  </div>
+
+  {% if result.base_protocol %}
+  <div class="protocol-summary">
+    <h2 class="section-heading">Base protocol</h2>
+    <div class="protocol-meta">
+      <span><strong>{{ result.base_protocol.name }}</strong></span>
+      <span>{{ result.base_protocol.position }}</span>
+      <span>{{ result.base_protocol.daily_frequency }} · {{ result.base_protocol.weekly_cadence }}</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <article class="plan-content prose">
+    {{ plan_html|safe }}
+  </article>
+
+  <div class="results-actions">
+    <a href="{{ url_for('questionnaire.results') }}" class="btn btn-secondary btn-lg">Back to results</a>
+    <a href="{{ url_for('questionnaire.start') }}" class="btn btn-primary btn-lg">New assessment</a>
+  </div>
+</section>
+{% endblock %}

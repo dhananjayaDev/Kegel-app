@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}How it works — Kegel Health{% endblock %}
+
+{% block content %}
+<section class="page-section page-section--research">
+  <p class="hero-label">Clinical foundation</p>
+  <h1 class="page-title">How it works</h1>
+  <p class="page-lead">
+    This assessment implements the screening logic, scoring, and triage pathways described in our research documentation below.
+  </p>
+
+  <article class="research-doc prose">
+    {{ research_html|safe }}
+  </article>
+
+  <div class="research-doc__actions">
+    <a href="{{ url_for('main.index') }}#start-quiz" class="btn btn-primary btn-lg">Begin assessment</a>
+  </div>
+</section>
+{% endblock %}

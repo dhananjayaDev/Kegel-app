@@ -1,0 +1,117 @@
+{% extends "quiz_base.html" %}
+
+{% block title %}Assessment — Kegel Health{% endblock %}
+
+{% block content %}
+{% set draft = draft|default({}) %}
+{% set progress_offset = progress_offset|default(0) %}
+{% set active = active_step if active_step is defined else 0 %}
+
+<form id="assessment-form" class="kegel-quiz" method="post" action="{{ url_for('questionnaire.submit') }}" novalidate>
+  {% if draft.get('age_group') %}
+  <input type="hidden" name="age_group" value="{{ draft.age_group }}">
+  {% endif %}
+
+  {% if errors and errors.get('_form') %}
+  <p class="kegel-slide__error kegel-form-error">{{ errors['_form'][0] }}</p>
+  {% endif %}
+
+  <header class="kegel-quiz__header">
+    <a href="{{ url_for('main.index') }}" class="kegel-brand">
+      <span class="kegel-brand__mark">K</span>
+      <span class="kegel-brand__name">Kegel Health</span>
+    </a>
+    <div class="kegel-quiz__progress">
+      <div class="kegel-quiz__progress-track">
+        <div class="kegel-quiz__progress-fill" id="progress-fill"></div>
+      </div>
+      <span class="kegel-quiz__progress-pct" id="progress-pct">0%</span>
+    </div>
+  </header>
+
+  <div class="kegel-quiz__viewport" id="quiz-viewport">
+    {% for step in steps %}
+    <section
+      class="kegel-slide{% if loop.index0 == active %} is-active{% endif %}"
+      data-step="{{ loop.index0 }}"
+      data-multi="{{ 'true' if step.type == 'multi_select' else 'false' }}"
+      data-option-count="{{ step.options|length }}"
+      aria-hidden="{{ 'false' if loop.index0 == active else 'true' }}"
+    >
+      <h1 class="kegel-slide__question">{{ step.text }}</h1>
+
+      <div class="kegel-options{% if step.options|length <= 4 %} kegel-options--grid{% endif %}{% if errors and errors.get(step.id) %} has-error{% endif %}" id="block-{{ step.id }}">
+        {% if step.type == 'multi_select' %}
+          {% for opt in step.options %}
+          <label class="kegel-option">
+            <input type="checkbox" name="{{ step.id }}" value="{{ opt.value }}"
+              {% if form_data and form_data.get(step.id) and opt.value|string in form_data.get(step.id) %}checked{% endif %}>
+            <span class="kegel-option__body">
+              <span class="kegel-option__text">{{ opt.label }}</span>
+              {% include 'components/option_caret.html' %}
+            </span>
+          </label>
+          {% endfor %}
+        {% else %}
+          {% for opt in step.options %}
+          <label class="kegel-option">
+            <input type="radio" name="{{ step.id }}" value="{{ opt.value }}" required
+              {% if form_data and form_data.get(step.id) and form_data.get(step.id)[0]|string == opt.value|string %}checked{% endif %}>
+            <span class="kegel-option__body">
+              <span class="kegel-option__text">{{ opt.label }}</span>
+              {% include 'components/option_caret.html' %}
+            </span>
+          </label>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% if errors and errors.get(step.id) %}
+      <p class="kegel-slide__error">Please select an answer to continue.</p>
+      {% endif %}
+
+      {% if step.type == 'multi_select' %}
+      <div class="kegel-slide__actions">
+        {% if loop.first and progress_offset %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
+        {% elif not loop.first %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
+        {% endif %}
+        <button type="button" class="kegel-btn kegel-btn--primary btn-next">Continue →</button>
+      </div>
+      {% elif loop.last %}
+      <div class="kegel-slide__actions kegel-slide__actions--submit">
+        {% if loop.first and progress_offset %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
+        {% elif not loop.first %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
+        {% endif %}
+        <button type="submit" class="kegel-btn kegel-btn--primary btn-submit">See my results →</button>
+      </div>
+      {% else %}
+      <div class="kegel-slide__actions">
+        {% if loop.first and progress_offset %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back-home">← Back</button>
+        {% elif not loop.first %}
+        <button type="button" class="kegel-btn kegel-btn--ghost btn-back">← Back</button>
+        {% endif %}
+      </div>
+      {% endif %}
+    </section>
+    {% endfor %}
+  </div>
+
+  <footer class="kegel-quiz__footer">
+    <p>For informational purposes only. Not medical advice.</p>
+  </footer>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.QUIZ_TOTAL = {{ total_steps }};
+  window.QUIZ_START = {{ active }};
+  window.QUIZ_PROGRESS_OFFSET = {{ progress_offset|default(0) }};
+</script>
+<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=5"></script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Results — Kegel Health{% endblock %}
+
+{% block content %}
+<section class="page-section results">
+  {% set triage = result.triage %}
+  {% set scoring = result.scoring %}
+  {% set timeline = triage.timeline %}
+
+  <div class="results-header{% if triage.urgency == 'critical' %} urgency-critical{% elif triage.urgency == 'elevated' %} urgency-elevated{% endif %}">
+    <p class="hero-label">Your assessment results</p>
+    <h1 class="page-title">{{ triage.title }}</h1>
+    <p class="page-lead">{{ triage.message }}</p>
+  </div>
+
+  <div class="results-grid">
+    <article class="result-card">
+      <h2>IIEF-EF Score</h2>
+      <p class="score-display">{{ scoring.iief_ef_score }}<span>/30</span></p>
+      <p class="score-label">{{ scoring.severity }}</p>
+    </article>
+
+    <article class="result-card">
+      <h2>Primary Profile</h2>
+      <p class="score-label">{{ scoring.primary_etiology or 'Mixed' }}</p>
+      {% if scoring.etiologies|length > 1 %}
+      <p class="meta-text">Also indicated: {{ scoring.etiologies|join(', ') }}</p>
+      {% endif %}
+    </article>
+
+    <article class="result-card">
+      <h2>Recommended Pathway</h2>
+      <p class="pathway-badge">Pathway {{ triage.pathway }}</p>
+      <ul class="action-list">
+        {% for item in triage.action_items %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+  </div>
+
+  {% if timeline %}
+  <section class="timeline-section">
+    <h2 class="section-heading">Expected recovery timeline</h2>
+    <div class="timeline-stats">
+      <div class="timeline-stat">
+        <span class="stat-label">First changes</span>
+        <span class="stat-value">{{ timeline.first_notice_weeks }} weeks</span>
+      </div>
+      <div class="timeline-stat">
+        <span class="stat-label">Peak improvement</span>
+        <span class="stat-value">{{ timeline.peak_improvement_weeks }} weeks</span>
+      </div>
+      <div class="timeline-stat">
+        <span class="stat-label">Full evaluation</span>
+        <span class="stat-value">{{ timeline.full_evaluation_months }} months</span>
+      </div>
+    </div>
+    <p class="meta-text">{{ timeline.resolution_rate }}</p>
+    {% if timeline.milestones %}
+    <ol class="milestone-list">
+      {% for m in timeline.milestones %}
+      <li><strong>{{ m.period }}</strong> — {{ m.note }}</li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <div class="results-actions">
+    {% if triage.includes_kegel_plan %}
+    <a href="{{ url_for('questionnaire.plan') }}" class="btn btn-primary btn-lg">View customized Kegel plan</a>
+    {% endif %}
+    <a href="{{ url_for('questionnaire.start') }}" class="btn btn-secondary btn-lg">Retake assessment</a>
+  </div>
+</section>
+{% endblock %}

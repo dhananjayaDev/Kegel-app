@@ -1,0 +1,101 @@
+{
+  "sections": [
+    {
+      "id": "demographics",
+      "title": "About You",
+      "description": "Anonymous demographic details personalize your exercise plan. No personal identifiers are collected.",
+      "questions": [
+        {
+          "id": "age_group",
+          "text": "What is your age group?",
+          "type": "single",
+          "required": true,
+          "options": [
+            {"value": "under_30", "label": "Under 30"},
+            {"value": "30_39", "label": "30–39"},
+            {"value": "40_49", "label": "40–49"},
+            {"value": "50_59", "label": "50–59"},
+            {"value": "60_plus", "label": "60 and over"}
+          ]
+        },
+        {
+          "id": "sedentary_lifestyle",
+          "text": "Would you describe your typical lifestyle as sedentary (prolonged sitting, minimal exercise)?",
+          "type": "single",
+          "required": true,
+          "options": [
+            {"value": "1", "label": "Yes"},
+            {"value": "0", "label": "No"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section_a",
+      "title": "Section A — IIEF-15 (Questions 1–15)",
+      "description": "Recall period: past 4 weeks.",
+      "questions": [
+        {"id": "q1", "text": "How often were you able to get an erection during sexual activity?", "type": "likert", "options": [{"value": 0, "label": "No sexual activity"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q2", "text": "When you had erections with sexual stimulation, how often were they hard enough for penetration?", "type": "likert", "options": [{"value": 0, "label": "No sexual activity"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q3", "text": "When you attempted sexual intercourse, how often were you able to penetrate your partner?", "type": "likert", "options": [{"value": 0, "label": "Did not attempt intercourse"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q4", "text": "During sexual intercourse, how often were you able to maintain your erection after penetration?", "type": "likert", "options": [{"value": 0, "label": "Did not attempt intercourse"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q5", "text": "During sexual intercourse, how difficult was it to maintain your erection to completion?", "type": "likert", "options": [{"value": 0, "label": "Did not attempt intercourse"}, {"value": 1, "label": "Extremely difficult"}, {"value": 2, "label": "Very difficult"}, {"value": 3, "label": "Difficult"}, {"value": 4, "label": "Slightly difficult"}, {"value": 5, "label": "Not difficult"}]},
+        {"id": "q6", "text": "How many times have you attempted sexual intercourse?", "type": "likert", "options": [{"value": 0, "label": "No attempts"}, {"value": 1, "label": "1 to 2 attempts"}, {"value": 2, "label": "3 to 4 attempts"}, {"value": 3, "label": "5 to 6 attempts"}, {"value": 4, "label": "7 to 10 attempts"}, {"value": 5, "label": "11 or more attempts"}]},
+        {"id": "q7", "text": "When you attempted sexual intercourse, how often was it satisfactory to you?", "type": "likert", "options": [{"value": 0, "label": "Did not attempt intercourse"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q8", "text": "How much have you enjoyed sexual intercourse?", "type": "likert", "options": [{"value": 0, "label": "No intercourse"}, {"value": 1, "label": "No enjoyment at all"}, {"value": 2, "label": "Not very enjoyable"}, {"value": 3, "label": "Fairly enjoyable"}, {"value": 4, "label": "Highly enjoyable"}, {"value": 5, "label": "Very highly enjoyable"}]},
+        {"id": "q9", "text": "When you had sexual stimulation or intercourse, how often did you ejaculate?", "type": "likert", "options": [{"value": 0, "label": "No sexual stimulation or intercourse"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q10", "text": "How often did you have the feeling of orgasm or climax (with or without ejaculation)?", "type": "likert", "options": [{"value": 0, "label": "No sexual stimulation or intercourse"}, {"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q11", "text": "How often have you felt sexual desire?", "type": "likert", "options": [{"value": 1, "label": "Almost never or never"}, {"value": 2, "label": "A few times (less than half)"}, {"value": 3, "label": "Sometimes (about half)"}, {"value": 4, "label": "Most times (more than half)"}, {"value": 5, "label": "Almost always or always"}]},
+        {"id": "q12", "text": "How would you rate your level of sexual desire?", "type": "likert", "options": [{"value": 1, "label": "Very low or no desire"}, {"value": 2, "label": "Low"}, {"value": 3, "label": "Moderate"}, {"value": 4, "label": "High"}, {"value": 5, "label": "Very high"}]},
+        {"id": "q13", "text": "How satisfied have you felt with your overall sex life?", "type": "likert", "options": [{"value": 1, "label": "Very dissatisfied"}, {"value": 2, "label": "Moderately dissatisfied"}, {"value": 3, "label": "Equally satisfied and dissatisfied"}, {"value": 4, "label": "Moderately satisfied"}, {"value": 5, "label": "Very satisfied"}]},
+        {"id": "q14", "text": "How satisfied have you been with your sexual relationship with your partner?", "type": "likert", "options": [{"value": 1, "label": "Very dissatisfied"}, {"value": 2, "label": "Moderately dissatisfied"}, {"value": 3, "label": "Equally satisfied and dissatisfied"}, {"value": 4, "label": "Moderately satisfied"}, {"value": 5, "label": "Very satisfied"}]},
+        {"id": "q15", "text": "How do you rate your confidence that you can get and keep your erection?", "type": "likert", "options": [{"value": 1, "label": "Very low"}, {"value": 2, "label": "Low"}, {"value": 3, "label": "Moderate"}, {"value": 4, "label": "High"}, {"value": 5, "label": "Very high"}]}
+      ]
+    },
+    {
+      "id": "section_b",
+      "title": "Section B — Morning Erection & Onset (16–20)",
+      "description": "Helps distinguish psychogenic from organic patterns.",
+      "questions": [
+        {"id": "q16", "text": "How did your erectile difficulties first develop?", "type": "single", "options": [{"value": 0, "label": "Gradually, worsening over months or years (Organic marker)"}, {"value": 1, "label": "Abruptly, often after a stressful event (Psychogenic marker)"}]},
+        {"id": "q17", "text": "Over the past month, how often have you experienced a full, rigid erection upon waking?", "type": "likert", "options": [{"value": 0, "label": "Never (Organic marker)"}, {"value": 1, "label": "Seldom (less than 20%)"}, {"value": 2, "label": "Less than half the time"}, {"value": 3, "label": "About half the time"}, {"value": 4, "label": "More than half the time"}, {"value": 5, "label": "Almost always or always (Psychogenic marker)"}]},
+        {"id": "q18", "text": "Which statement best describes the consistency of your erections?", "type": "single", "options": [{"value": 0, "label": "Consistently weak in all situations"}, {"value": 1, "label": "Variable — rigid alone/morning, struggle with partner"}]},
+        {"id": "q19", "text": "How often do you feel extreme anxiety or fear of performance failure before or during sex?", "type": "single", "options": [{"value": 0, "label": "Never or rarely"}, {"value": 1, "label": "Sometimes"}, {"value": 2, "label": "Frequently or almost always"}]},
+        {"id": "q20", "text": "Once achieved, how rapidly does your erection subside if stimulation is paused?", "type": "single", "options": [{"value": 0, "label": "Almost instantly — venous leak marker"}, {"value": 1, "label": "Gradually over several minutes"}]}
+      ]
+    },
+    {
+      "id": "section_c",
+      "title": "Section C — Cardiovascular Risk (21–25)",
+      "description": "Assesses vascular and cardiac safety markers.",
+      "questions": [
+        {"id": "q21", "text": "Do you experience calf/thigh cramping when walking briskly that resolves with rest?", "type": "single", "options": [{"value": 0, "label": "Yes (possible claudication)"}, {"value": 1, "label": "No"}]},
+        {"id": "q22", "text": "Have you been diagnosed with or treated for any of the following? (Select all that apply)", "type": "multi_select", "options": [{"value": 0, "label": "Hypertension, CAD, dyslipidemia, or PVD"}, {"value": 1, "label": "None of the above"}]},
+        {"id": "q23", "text": "How would you rate your exercise tolerance?", "type": "single", "options": [{"value": 0, "label": "Highly restricted — symptoms with light exertion"}, {"value": 1, "label": "Standard — moderate activity without symptoms"}]},
+        {"id": "q24", "text": "Are you currently prescribed nitrates or nitroglycerin?", "type": "single", "options": [{"value": 0, "label": "Yes"}, {"value": 1, "label": "No"}]},
+        {"id": "q25", "text": "What is your history of tobacco use?", "type": "single", "options": [{"value": 0, "label": "Active daily smoker or heavy history"}, {"value": 1, "label": "Non-smoker or light social history"}]}
+      ]
+    },
+    {
+      "id": "section_d",
+      "title": "Section D — Endocrine & Neurological (26–29)",
+      "description": "Maps hormonal and nerve-related contributors.",
+      "questions": [
+        {"id": "q26", "text": "Have you noticed unexplained muscle loss, fatigue, hot flashes, or gynecomastia?", "type": "single", "options": [{"value": 0, "label": "Yes (possible hypogonadism marker)"}, {"value": 1, "label": "No"}]},
+        {"id": "q27", "text": "Have you been diagnosed with diabetes or elevated HbA1c (>5.7%)?", "type": "single", "options": [{"value": 0, "label": "Yes"}, {"value": 1, "label": "No"}]},
+        {"id": "q28", "text": "Do you experience numbness or pins-and-needles in genitals, pelvic floor, or perineum?", "type": "single", "options": [{"value": 0, "label": "Yes (neurological sign)"}, {"value": 1, "label": "No"}]},
+        {"id": "q29", "text": "Have you had radical pelvic surgery, radiotherapy, or spinal cord injury?", "type": "single", "options": [{"value": 0, "label": "Yes"}, {"value": 1, "label": "No"}]}
+      ]
+    },
+    {
+      "id": "section_e",
+      "title": "Section E — Red Flags (30–32)",
+      "description": "Immediate clinical alerts.",
+      "questions": [
+        {"id": "q30", "text": "Do you feel penile plaques, pain, or curvature >30° during erections?", "type": "single", "options": [{"value": 0, "label": "Yes (structural alert)"}, {"value": 1, "label": "No"}]},
+        {"id": "q31", "text": "Have you sustained blunt trauma to groin, pelvis, or perineum?", "type": "single", "options": [{"value": 0, "label": "Yes"}, {"value": 1, "label": "No"}]},
+        {"id": "q32", "text": "Have you ever had a painful rigid erection lasting longer than 4 hours without stimulation?", "type": "single", "options": [{"value": 0, "label": "Yes (priapism emergency)"}, {"value": 1, "label": "No"}]}
+      ]
+    }
+  ]
+}

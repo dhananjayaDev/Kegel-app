@@ -1,0 +1,474 @@
+/* Kegel Health — quiz.kegel-plan.com inspired flow */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  background-color: #ffffff;
+}
+
+:root {
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --header-logo: 32px;
+}
+
+body {
+  font-family: sans-serif, "Segoe UI", Roboto, Helvetica, Arial;
+  background: #fff;
+  color: #111;
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ── Layout ── */
+
+.kegel-quiz {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.25rem 1.5rem;
+}
+
+.kegel-quiz__header {
+  padding: 1.25rem 0 1rem;
+  flex-shrink: 0;
+}
+
+.kegel-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #111;
+  margin-bottom: 1.25rem;
+}
+
+.kegel-brand__mark {
+  width: var(--header-logo);
+  height: var(--header-logo);
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.kegel-brand__name {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+}
+
+.kegel-quiz__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kegel-quiz__progress-track {
+  flex: 1;
+  height: 6px;
+  background: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.kegel-quiz__progress-fill {
+  height: 100%;
+  width: 0;
+  background: #111;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.kegel-quiz__progress-pct {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #666;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+.kegel-quiz__viewport {
+  flex: 1;
+  position: relative;
+}
+
+/* ── Slides: ONLY one visible ── */
+
+.kegel-slide {
+  display: none !important;
+  width: 100%;
+  animation: none;
+}
+
+.kegel-slide.is-active {
+  display: block !important;
+}
+
+@keyframes kegel-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kegel-slide.is-active.is-animating {
+  animation: kegel-fade-in 0.25s ease;
+}
+
+/* ── Hero (first slide only) ── */
+
+.kegel-hero {
+  margin-bottom: 1.75rem;
+}
+
+.kegel-hero__title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  line-height: 1.25;
+}
+
+.kegel-hero__photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.kegel-hero__photo {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  background: #e8e8e8;
+}
+
+.kegel-trust {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  font-size: var(--text-sm);
+  color: #444;
+  line-height: var(--leading-normal);
+  text-align: center;
+}
+
+.kegel-trust strong {
+  color: #111;
+}
+
+/* ── Question ── */
+
+.kegel-slide__question {
+  font-size: clamp(1.25rem, 4vw, var(--text-2xl));
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: var(--leading-snug);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Options (kegel-plan style) ── */
+
+.kegel-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.kegel-options--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+}
+
+.kegel-options--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+/* ── Home page embedded quiz ── */
+
+.hero--quiz {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.hero--quiz .hero-title {
+  font-size: clamp(1.375rem, 5vw, 2rem);
+  line-height: var(--leading-tight);
+  margin-bottom: 0.5rem;
+}
+
+.hero--quiz .hero-subtitle {
+  margin-bottom: 1.25rem;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: #444;
+}
+
+.hero--quiz .kegel-hero__photos {
+  margin-bottom: 1rem;
+}
+
+.hero--quiz .kegel-trust {
+  margin-bottom: 1.5rem;
+}
+
+.home-quiz__form {
+  width: 100%;
+  text-align: left;
+  padding-top: 0.25rem;
+  border-top: 1px solid #eee;
+}
+
+.home-quiz__question {
+  font-size: clamp(1.25rem, 4vw, var(--text-2xl));
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: var(--leading-snug);
+  margin: 1.25rem 0 0.375rem;
+  color: #111;
+}
+
+.home-quiz__hint {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: #666;
+  line-height: var(--leading-normal);
+  margin-bottom: 1rem;
+}
+
+.features--below-quiz {
+  margin-top: 1rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #eee;
+}
+
+.kegel-option {
+  display: block;
+  cursor: pointer;
+}
+
+.kegel-option input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.kegel-option__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: #e8f3fc;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.kegel-option__text {
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  text-align: left;
+}
+
+.kegel-option__chevron {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.kegel-option:hover .kegel-option__body {
+  background: #d9ebf8;
+}
+
+.kegel-option input:checked + .kegel-option__body {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+
+
+.kegel-options.has-error .kegel-option__body {
+  border-color: #999;
+}
+
+.kegel-slide__error {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #111;
+  line-height: var(--leading-normal);
+}
+
+.kegel-form-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+/* ── Actions ── */
+
+.kegel-slide__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.kegel-slide__actions--submit {
+  margin-top: 2rem;
+}
+
+.kegel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.375rem;
+  border-radius: 999px;
+  font-size: var(--text-base);
+  font-weight: 600;
+  border: none;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a.kegel-btn,
+a.kegel-btn:hover,
+a.kegel-brand,
+a.kegel-brand:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.kegel-btn:hover {
+  opacity: 0.88;
+}
+
+.kegel-btn--primary {
+  background: #111;
+  color: #fff;
+  min-width: 160px;
+}
+
+.kegel-btn--ghost {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.kegel-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Footer ── */
+
+.kegel-quiz__footer {
+  flex-shrink: 0;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.kegel-quiz__footer p {
+  font-size: var(--text-xs);
+  color: #999;
+  line-height: var(--leading-normal);
+}
+
+/* ── Responsive ── */
+
+@media (min-width: 769px) {
+  .hero--quiz {
+    padding: 2rem 0 3rem;
+  }
+
+  .hero--quiz .hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .hero--quiz .hero-subtitle {
+    font-size: var(--text-base);
+  }
+
+  .kegel-brand__name {
+    font-size: var(--text-base);
+  }
+
+  .kegel-option__body {
+    padding: 1rem 1.125rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero--quiz {
+    padding-top: 1rem;
+  }
+
+  .kegel-quiz {
+    padding: 0 max(1rem, env(safe-area-inset-right)) 1.25rem max(1rem, env(safe-area-inset-left));
+  }
+
+  .kegel-quiz__header {
+    padding: 1rem 0 0.875rem;
+  }
+
+  .kegel-brand {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .kegel-options--grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kegel-hero__photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
