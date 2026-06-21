@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{% block title %}Kegel Health{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='icons/kegel.png') }}" type="image/png">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/kegel.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=39">
   {% block head %}{% endblock %}
 </head>
