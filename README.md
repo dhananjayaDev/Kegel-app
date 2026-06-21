@@ -1,7 +1,7 @@
 # Kegel Health Assessment
 
 <p align="center">
-  <img src="application/static/images/kegel-banner.png" alt="Kegel Health — wellness hero banner" width="100%">
+  <img src="./application/static/images/kegel-banner.png" alt="Kegel Health — wellness hero banner" width="100%">
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
