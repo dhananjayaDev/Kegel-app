@@ -79,3 +79,4 @@ class AssessmentResult:
     base_protocol: dict[str, Any] | None = None
     customized_plan: str | None = None
     plan_source: str = "template"
+    llm_rate_limited: bool = False

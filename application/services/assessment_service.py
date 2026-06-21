@@ -38,6 +38,7 @@ class AssessmentService:
         )
 
         plan_data: dict[str, Any] = {}
+        llm_rate_limited = False
         if triage.includes_kegel_plan:
             plan_data = self._registry.invoke(
                 "plan",
@@ -48,6 +49,7 @@ class AssessmentService:
                     "triage": triage,
                 },
             )
+            llm_rate_limited = bool(plan_data.get("llm_rate_limited"))
 
         return AssessmentResult(
             session_id=session_id or str(uuid.uuid4()),
@@ -58,6 +60,7 @@ class AssessmentService:
             base_protocol=plan_data.get("base_protocol"),
             customized_plan=plan_data.get("customized_plan"),
             plan_source=plan_data.get("plan_source", "template"),
+            llm_rate_limited=llm_rate_limited,
         )
 
     @staticmethod
@@ -99,6 +102,7 @@ class AssessmentService:
             "base_protocol": result.base_protocol,
             "customized_plan": result.customized_plan,
             "plan_source": result.plan_source,
+            "llm_rate_limited": result.llm_rate_limited,
         }
 
     @staticmethod
@@ -139,4 +143,5 @@ class AssessmentService:
             base_protocol=data.get("base_protocol"),
             customized_plan=data.get("customized_plan"),
             plan_source=data.get("plan_source", "template"),
+            llm_rate_limited=data.get("llm_rate_limited", False),
         )

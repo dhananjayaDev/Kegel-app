@@ -5,6 +5,7 @@ from __future__ import annotations
 import requests
 
 from application.llm.base import LLMClient
+from application.llm.errors import LLMRateLimitError
 
 
 class GeminiClient(LLMClient):
@@ -36,7 +37,27 @@ class GeminiClient(LLMClient):
             },
             timeout=120,
         )
-        response.raise_for_status()
+        if response.status_code in (429, 503):
+            raise LLMRateLimitError(
+                f"Gemini rate limit or capacity error (HTTP {response.status_code})"
+            )
+
+        if response.status_code >= 400:
+            error_text = response.text.lower()
+            try:
+                payload = response.json()
+                error_text = str(payload.get("error", payload)).lower()
+            except ValueError:
+                pass
+            if any(
+                token in error_text
+                for token in ("quota", "rate limit", "resource_exhausted", "too many requests")
+            ):
+                raise LLMRateLimitError(
+                    f"Gemini quota or rate limit reached (HTTP {response.status_code})"
+                )
+            response.raise_for_status()
+
         data = response.json()
         candidates = data.get("candidates", [])
         if not candidates:

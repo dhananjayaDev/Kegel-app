@@ -23,3 +23,6 @@ class Config:
     # ── Hosted deployment: set GEMINI_API_KEY to enable cloud LLM ──
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")  # placeholder — required when LLM_PROVIDER=gemini
     GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+
+    DESKTOP_APP_URL = os.getenv("DESKTOP_APP_URL", "")
+    MOBILE_APP_URL = os.getenv("MOBILE_APP_URL", "")

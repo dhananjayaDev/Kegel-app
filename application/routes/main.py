@@ -37,7 +37,9 @@ def _get_first_question():
 
 @main_bp.context_processor
 def _inject_quiz_context():
-    return {"first_question": _get_first_question()}
+    return {
+        "first_question": _get_first_question(),
+    }
 
 
 @main_bp.route("/")

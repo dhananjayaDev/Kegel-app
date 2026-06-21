@@ -1,0 +1,49 @@
+<div class="home-app-links" id="app-alternatives">
+  {% if llm_limit_notice %}
+  <div class="home-app-links__notice" role="alert">
+    <p class="home-app-links__notice-title">Plan personalization is temporarily unavailable</p>
+    <p class="home-app-links__notice-text">
+      Our AI service reached its usage limit. Your assessment scores are saved
+      {% if has_saved_assessment %}— you can still view your results{% endif %}.
+      For the full personalized experience, use the desktop or mobile app below.
+    </p>
+    {% if has_saved_assessment %}
+    <a href="{{ url_for('questionnaire.results') }}" class="home-app-links__results-link">View your results</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <p class="home-app-links__label">Get the full app experience</p>
+  <div class="home-app-links__actions">
+    <a
+      href="{{ desktop_app_url or '#' }}"
+      class="home-app-links__link{% if not desktop_app_url %} home-app-links__link--pending{% endif %}"
+      {% if desktop_app_url %}target="_blank" rel="noopener noreferrer"{% else %}aria-disabled="true" tabindex="-1"{% endif %}
+    >
+      <img
+        src="{{ url_for('static', filename='icons/laptop.svg') }}"
+        class="home-app-links__icon"
+        alt=""
+        width="20"
+        height="20"
+        aria-hidden="true"
+      >
+      Download desktop app
+    </a>
+    <a
+      href="{{ mobile_app_url or '#' }}"
+      class="home-app-links__link{% if not mobile_app_url %} home-app-links__link--pending{% endif %}"
+      {% if mobile_app_url %}target="_blank" rel="noopener noreferrer"{% else %}aria-disabled="true" tabindex="-1"{% endif %}
+    >
+      <img
+        src="{{ url_for('static', filename='icons/device-mobile.svg') }}"
+        class="home-app-links__icon"
+        alt=""
+        width="20"
+        height="20"
+        aria-hidden="true"
+      >
+      Download mobile app
+    </a>
+  </div>
+</div>

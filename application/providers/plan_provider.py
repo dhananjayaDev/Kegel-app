@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from application.llm.errors import LLMRateLimitError
 from application.llm.factory import LLMFactory
 from application.models import AssessmentResult, Demographics, ScoringResult, TriageResult
 from application.providers.base import BaseProvider
@@ -110,12 +111,12 @@ Avoid tensing abdomen, buttocks, or holding your breath.
         answers: dict[str, Any],
         scoring: ScoringResult,
         triage: TriageResult,
-    ) -> tuple[str, str, dict]:
+    ) -> tuple[str, str, dict, bool]:
         protocol = self.base_protocol(scoring)
         template = self._build_template_plan(demographics, scoring, triage, protocol)
 
         if not self._llm:
-            return template, "template", protocol
+            return template, "template", protocol, False
 
         try:
             customized = self._llm.generate(
@@ -123,11 +124,13 @@ Avoid tensing abdomen, buttocks, or holding your breath.
                 self._build_llm_prompt(demographics, scoring, triage, protocol, answers),
             )
             if customized:
-                return customized, self._config.LLM_PROVIDER, protocol
+                return customized, self._config.LLM_PROVIDER, protocol, False
+        except LLMRateLimitError:
+            return template, "template (rate limited)", protocol, True
         except Exception:
             pass
 
-        return template, "template (LLM unavailable)", protocol
+        return template, "template (LLM unavailable)", protocol, False
 
 
 class PlanProvider(BaseProvider):
@@ -145,11 +148,12 @@ class PlanProvider(BaseProvider):
         triage = payload["triage"]
         answers = payload["answers"]
 
-        plan_text, source, protocol = self._generator.generate(
+        plan_text, source, protocol, llm_rate_limited = self._generator.generate(
             demographics, answers, scoring, triage
         )
         return {
             "customized_plan": plan_text,
             "plan_source": source,
             "base_protocol": protocol,
+            "llm_rate_limited": llm_rate_limited,
         }

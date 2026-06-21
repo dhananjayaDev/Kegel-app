@@ -136,6 +136,12 @@ def submit():
     session["assessment"] = stored
     session["assessment_id"] = result.session_id
     session.pop(DRAFT_KEY, None)
+
+    if stored.get("llm_rate_limited"):
+        session["llm_limit_notice"] = True
+        return redirect(url_for("main.index", llm_limited=1) + "#app-alternatives")
+
+    session.pop("llm_limit_notice", None)
     return redirect(url_for("questionnaire.results"))
 
 

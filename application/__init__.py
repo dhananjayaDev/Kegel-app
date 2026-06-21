@@ -1,6 +1,6 @@
 """Flask application factory."""
 
-from flask import Flask
+from flask import Flask, request, session
 
 from application.config import Config
 from application.providers import ProviderRegistry
@@ -16,6 +16,17 @@ def create_app(config_class: type = Config) -> Flask:
 
     registry = ProviderRegistry(app.config)
     app.extensions["providers"] = registry
+
+    @app.context_processor
+    def _inject_site_context() -> dict:
+        if request.args.get("llm_limited") == "1":
+            session["llm_limit_notice"] = True
+        return {
+            "desktop_app_url": app.config.get("DESKTOP_APP_URL", ""),
+            "mobile_app_url": app.config.get("MOBILE_APP_URL", ""),
+            "llm_limit_notice": session.get("llm_limit_notice", False),
+            "has_saved_assessment": bool(session.get("assessment")),
+        }
 
     app.register_blueprint(main_bp)
     app.register_blueprint(questionnaire_bp, url_prefix="/assessment")
