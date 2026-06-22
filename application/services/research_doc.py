@@ -283,7 +283,7 @@ def _render_table(headers: list[str], rows: list[list[str]]) -> str:
         parts.extend(f"<td>{_format_cell(cell)}</td>" for cell in row)
         parts.append("</tr>")
     parts.append("</tbody></table>")
-    return "".join(parts)
+    return f'<div class="research-table-wrap">{"".join(parts)}</div>'
 
 
 def _render_tab_table(lines: list[str]) -> str:

@@ -5,7 +5,7 @@
 {% block body_class %}has-kegel-quiz{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=46">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=60">
 {% endblock %}
 
 {% block content %}
@@ -83,5 +83,5 @@
   window.QUIZ_START = {{ active }};
   window.QUIZ_PROGRESS_OFFSET = {{ progress_offset|default(0) }};
 </script>
-<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=12"></script>
+<script src="{{ url_for('static', filename='js/questionnaire.js') }}?v=13"></script>
 {% endblock %}

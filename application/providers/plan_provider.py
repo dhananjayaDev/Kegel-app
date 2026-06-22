@@ -117,13 +117,14 @@ Avoid tensing abdomen, buttocks, or holding your breath.
         protocol = self.base_protocol(scoring)
         template = self._build_template_plan(demographics, scoring, triage, protocol)
 
-        if not self._llm_chain():
+        chain = self._llm_chain()
+        if not chain:
             return template, "template", protocol, False
 
         prompt = self._build_llm_prompt(demographics, scoring, triage, protocol, answers)
         rate_limited = False
 
-        for resolved in self._llm_chain():
+        for resolved in chain:
             try:
                 customized = resolved.client.generate(self.SYSTEM_PROMPT, prompt)
                 if customized:

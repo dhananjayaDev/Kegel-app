@@ -1,4 +1,4 @@
-"""Runtime LLM availability snapshot for UI and API."""
+"""Runtime LLM availability snapshot for settings UI and API (on demand only)."""
 
 from __future__ import annotations
 

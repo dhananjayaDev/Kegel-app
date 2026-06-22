@@ -64,8 +64,23 @@ body.has-kegel-quiz {
   overscroll-behavior: none;
 }
 
+body.has-kegel-quiz > .site-frame {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: 1rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-width: var(--content-wide-max);
+  width: 100%;
+  margin: 0 auto;
+  padding-inline: var(--space-page-x);
+  overflow: hidden;
+}
+
 body.has-kegel-quiz .site-header {
   flex-shrink: 0;
+  grid-column: 1 / -1;
 }
 
 body.has-kegel-quiz .site-footer {
@@ -73,15 +88,20 @@ body.has-kegel-quiz .site-footer {
 }
 
 body.has-kegel-quiz .main-content {
+  grid-column: 1 / -1;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   max-width: 480px;
   width: 100%;
   margin: 0 auto;
-  padding: var(--space-2) var(--space-page-x) 0;
+  padding: var(--space-2) 0 0;
   min-height: 0;
   overflow: hidden;
+}
+
+body.has-kegel-quiz .main-content > * {
+  width: 100%;
 }
 
 .kegel-quiz {
@@ -181,6 +201,17 @@ body.has-kegel-quiz .kegel-quiz__nav {
 
 .kegel-quiz__nav [hidden] {
   display: none !important;
+}
+
+.kegel-quiz.is-submitting .kegel-slide {
+  display: block !important;
+  position: absolute !important;
+  left: -10000px !important;
+  top: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 /* ── Slides: ONLY one visible ── */
@@ -299,7 +330,7 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
 /* ── Home page embedded quiz ── */
 
 .hero--quiz {
-  max-width: 480px;
+  max-width: var(--content-narrow-max, 480px);
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -711,9 +742,17 @@ a.kegel-btn:hover {
 }
 
 @media (max-width: 768px) {
+  body.has-kegel-quiz > .site-frame {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
   body.has-kegel-quiz .main-content {
-    padding-left: max(var(--space-page-x), env(safe-area-inset-left));
-    padding-right: max(var(--space-page-x), env(safe-area-inset-right));
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

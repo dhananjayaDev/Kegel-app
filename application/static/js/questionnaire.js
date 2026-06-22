@@ -116,6 +116,12 @@
     return true;
   }
 
+  function prepareSubmit() {
+    if (!validateSlide(currentSlide())) return false;
+    form.classList.add("is-submitting");
+    return true;
+  }
+
   function goNext() {
     if (!validateSlide(currentSlide())) return;
     if (current < slides.length - 1) showSlide(current + 1);
@@ -152,11 +158,28 @@
     if (e.target.closest(".btn-back")) {
       e.preventDefault();
       goBack();
+      return;
+    }
+
+    if (e.target.closest(".btn-submit")) {
+      e.preventDefault();
+      if (submitBtn && submitBtn.disabled) return;
+      if (!prepareSubmit()) return;
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit(submitBtn);
+      } else {
+        form.submit();
+      }
     }
   });
 
   form.addEventListener("submit", function (e) {
-    if (!validateSlide(currentSlide())) e.preventDefault();
+    if (!form.classList.contains("is-submitting")) {
+      if (!prepareSubmit()) {
+        e.preventDefault();
+        return;
+      }
+    }
   });
 
   window.addEventListener("resize", updateViewportScroll);

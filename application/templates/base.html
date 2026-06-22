@@ -6,14 +6,16 @@
   <title>{% block title %}Kegel Health{% endblock %}</title>
   <link rel="icon" href="{{ url_for('static', filename='icons/kegel.png') }}" type="image/png">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/kegel.png') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=43">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=53">
   {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
-  {% include 'components/header.html' %}
-  <main class="main-content">
-    {% block content %}{% endblock %}
-  </main>
+  <div class="site-frame">
+    {% include 'components/header.html' %}
+    <main class="main-content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
   {% include 'components/footer.html' %}
   {% block scripts %}{% endblock %}
 </body>

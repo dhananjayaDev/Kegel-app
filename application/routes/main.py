@@ -8,6 +8,7 @@ from application.config import Config
 from application.services.download_links import find_desktop_installer
 from application.services.quiz_helpers import first_question, flatten_questions
 from application.services.research_doc import research_doc_html
+from application.services.llm_status import llm_status
 
 main_bp = Blueprint("main", __name__)
 DRAFT_KEY = "quiz_draft"
@@ -114,8 +115,6 @@ def download_desktop():
 
 @main_bp.route("/api/llm/status")
 def llm_status_api():
-    from application.services.llm_status import llm_status
-
     return jsonify(llm_status(current_app.config))
 
 
@@ -140,5 +139,6 @@ def settings():
         ollama_base_url=session.get("ollama_base_url", current_app.config.get("OLLAMA_BASE_URL", "")),
         ollama_model=session.get("ollama_model", current_app.config.get("OLLAMA_MODEL", "")),
         settings_saved=saved,
+        llm_status=llm_status(current_app.config),
     )
     return render_template("settings.html", **ctx)

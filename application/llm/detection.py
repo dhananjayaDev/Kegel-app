@@ -100,9 +100,28 @@ def ollama_candidate_urls(config: Any) -> list[str]:
 
 
 def find_ollama(config: Any) -> OllamaProbeResult | None:
+    try:
+        from flask import g, has_request_context
+
+        if has_request_context() and hasattr(g, "_ollama_probe"):
+            return g._ollama_probe
+    except ImportError:
+        pass
+
     configured_model = _session_override("ollama_model") or getattr(config, "OLLAMA_MODEL", "llama3.2")
+    result: OllamaProbeResult | None = None
     for base_url in ollama_candidate_urls(config):
-        result = probe_ollama(base_url, configured_model)
-        if result.available:
-            return result
-    return None
+        probe = probe_ollama(base_url, configured_model)
+        if probe.available:
+            result = probe
+            break
+
+    try:
+        from flask import g, has_request_context
+
+        if has_request_context():
+            g._ollama_probe = result
+    except ImportError:
+        pass
+
+    return result

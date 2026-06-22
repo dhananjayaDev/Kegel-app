@@ -4,7 +4,6 @@ from flask import Flask, request, session
 
 from application.config import Config
 from application.services.download_links import resolve_download_links
-from application.services.llm_status import llm_status
 from application.providers import ProviderRegistry
 from application.routes.main import main_bp
 from application.routes.questionnaire import questionnaire_bp
@@ -33,7 +32,6 @@ def create_app(config_class: type = Config) -> Flask:
             "llm_limit_notice": session.get("llm_limit_notice", False),
             "has_saved_assessment": bool(session.get("assessment")),
             "app_deployment": app.config.get("APP_DEPLOYMENT", "web"),
-            "llm_status": llm_status(app.config),
             "show_llm_settings": app.config.get("APP_DEPLOYMENT", "web") in ("desktop", "android"),
         }
 
