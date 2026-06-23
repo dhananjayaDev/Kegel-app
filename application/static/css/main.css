@@ -421,6 +421,19 @@ a {
   grid-template-columns: subgrid;
 }
 
+.page-section--research > .research-provenance {
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.research-provenance p,
+.research-provenance li {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .research-doc > :not(.research-table-wrap) {
   grid-column: 2;
   width: 100%;
@@ -482,6 +495,12 @@ a {
 .legal-doc li {
   text-align: justify;
   text-justify: inter-word;
+}
+
+.legal-doc a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .research-doc__title {
@@ -1397,6 +1416,11 @@ a {
     grid-column: auto;
     width: 100%;
     min-width: 0;
+  }
+
+  .page-section--research > .research-provenance {
+    grid-column: auto;
+    width: 100%;
   }
 
   .hero {
