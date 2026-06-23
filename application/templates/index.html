@@ -3,7 +3,7 @@
 {% block title %}Kegel Health — Anonymous ED Assessment{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=57">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}?v=62">
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,20 @@
   <p class="hero-label">{{ hero_label }}</p>
   <h1 class="hero-title">{{ hero_title }}</h1>
   <p class="hero-subtitle">{{ hero_subtitle }}</p>
+  <div class="hero-stats" aria-label="Site activity">
+    <div class="hero-stats__item">
+      <span class="hero-stats__label">Site Visits</span>
+      <span class="hero-stats__value">{{ site_stats.site_visits | compact_number }}</span>
+    </div>
+    <div class="hero-stats__item">
+      <span class="hero-stats__label">Downloads</span>
+      <span class="hero-stats__value">{{ site_stats.downloads | compact_number }}</span>
+    </div>
+    <div class="hero-stats__item">
+      <span class="hero-stats__label">Live Quizzes</span>
+      <span class="hero-stats__value">{{ site_stats.quizzes | compact_number }}</span>
+    </div>
+  </div>
 
   {% set hero_photos = hero_photos|default([
     'images/pexels-lauraoliveira-18795817.webp',

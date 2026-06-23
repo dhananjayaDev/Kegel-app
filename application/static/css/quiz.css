@@ -344,10 +344,42 @@ body.has-kegel-quiz .kegel-options:not(.kegel-options--grid) {
 }
 
 .hero--quiz .hero-subtitle {
-  margin-bottom: var(--space-section);
+  margin-bottom: var(--space-2);
   font-size: var(--text-sm);
   line-height: var(--leading-normal);
   color: #444;
+}
+
+.hero--quiz .hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  max-width: 22rem;
+  margin: 0 auto var(--space-section);
+  text-align: center;
+}
+
+.hero-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.hero-stats__label {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: #666;
+  letter-spacing: 0.01em;
+}
+
+.hero-stats__value {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: #111;
+  letter-spacing: -0.02em;
 }
 
 .hero--quiz .kegel-hero__photos {

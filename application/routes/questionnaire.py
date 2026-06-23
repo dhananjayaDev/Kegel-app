@@ -7,6 +7,7 @@ from flask import Blueprint, current_app, redirect, render_template, request, se
 from application.components.layout import PageLayout
 from application.services.assessment_service import AssessmentService
 from application.services.quiz_helpers import flatten_questions, options_side_by_side
+from application.services.site_stats import increment_stat
 from application.utils.markdown import render_markdown
 
 questionnaire_bp = Blueprint("questionnaire", __name__)
@@ -142,6 +143,7 @@ def submit():
         return redirect(url_for("main.index", llm_limited=1) + "#app-alternatives")
 
     session.pop("llm_limit_notice", None)
+    increment_stat(current_app.config.get("DATABASE_URL", ""), "quizzes")
     return redirect(url_for("questionnaire.results"))
 
 

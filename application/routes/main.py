@@ -9,6 +9,7 @@ from application.services.download_links import find_desktop_installer
 from application.services.quiz_helpers import first_question, flatten_questions
 from application.services.research_doc import research_doc_html
 from application.services.llm_status import llm_status
+from application.services.site_stats import get_stats, increment_stat
 
 main_bp = Blueprint("main", __name__)
 DRAFT_KEY = "quiz_draft"
@@ -51,11 +52,18 @@ def index():
     sections = _sections()
     steps = flatten_questions(sections)
     fq = _get_first_question()
+    db_url = current_app.config.get("DATABASE_URL", "")
+    site_stats = increment_stat(db_url, "site_visits") or get_stats(db_url) or {
+        "site_visits": 0,
+        "downloads": 0,
+        "quizzes": 0,
+    }
     ctx = PageLayout.context(
         active_path="/",
         hero_label="Understand your profile today",
         hero_title="Get your personalized wellness plan",
         hero_subtitle="No account required.",
+        site_stats=site_stats,
         hero_photos=[
             "images/pexels-lauraoliveira-18795817.webp",
             "images/pexels-n-voitkevich-4942801.webp",
@@ -106,6 +114,7 @@ def download_desktop():
     installer = find_desktop_installer(Config.BASE_DIR)
     if not installer:
         return redirect(url_for("main.index"))
+    increment_stat(current_app.config.get("DATABASE_URL", ""), "downloads")
     return send_file(
         installer,
         as_attachment=True,

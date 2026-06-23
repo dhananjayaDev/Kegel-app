@@ -4,6 +4,7 @@ from flask import Flask, request, session
 
 from application.config import Config
 from application.services.download_links import resolve_download_links
+from application.services.site_stats import init_stats_db
 from application.providers import ProviderRegistry
 from application.routes.main import main_bp
 from application.routes.questionnaire import questionnaire_bp
@@ -17,6 +18,13 @@ def create_app(config_class: type = Config) -> Flask:
 
     registry = ProviderRegistry(app.config)
     app.extensions["providers"] = registry
+
+    database_url = app.config.get("DATABASE_URL", "")
+    if database_url:
+        try:
+            init_stats_db(database_url)
+        except Exception:
+            app.logger.exception("Could not initialize site stats database")
 
     @app.context_processor
     def _inject_site_context() -> dict:
@@ -37,5 +45,9 @@ def create_app(config_class: type = Config) -> Flask:
 
     app.register_blueprint(main_bp)
     app.register_blueprint(questionnaire_bp, url_prefix="/assessment")
+
+    from application.services.site_stats import format_compact_number
+
+    app.jinja_env.filters["compact_number"] = format_compact_number
 
     return app

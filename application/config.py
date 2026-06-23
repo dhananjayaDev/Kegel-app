@@ -29,5 +29,7 @@ class Config:
     DESKTOP_APP_URL = os.getenv("DESKTOP_APP_URL", "")
     MOBILE_APP_URL = os.getenv("MOBILE_APP_URL", "")
 
+    DATABASE_URL = os.getenv("DATABASE_URL", "")
+
     HOST = os.getenv("FLASK_HOST", "0.0.0.0")
     PORT = int(os.getenv("FLASK_PORT", "5000"))
