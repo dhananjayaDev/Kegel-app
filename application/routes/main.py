@@ -111,10 +111,16 @@ def privacy():
 
 @main_bp.route("/download/desktop")
 def download_desktop():
+    db_url = current_app.config.get("DATABASE_URL", "")
+    external_url = (current_app.config.get("DESKTOP_APP_URL", "") or "").strip()
+    if external_url:
+        increment_stat(db_url, "downloads")
+        return redirect(external_url)
+
     installer = find_desktop_installer(Config.BASE_DIR)
     if not installer:
         return redirect(url_for("main.index"))
-    increment_stat(current_app.config.get("DATABASE_URL", ""), "downloads")
+    increment_stat(db_url, "downloads")
     return send_file(
         installer,
         as_attachment=True,

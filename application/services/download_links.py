@@ -38,12 +38,8 @@ def resolve_download_links(config: Any) -> dict[str, str | bool]:
     configured_mobile = _config_str(config, "MOBILE_APP_URL")
     base_dir = config.get("BASE_DIR", Config.BASE_DIR) if hasattr(config, "get") else Config.BASE_DIR
 
-    desktop_url = configured_desktop
-    desktop_available = bool(configured_desktop)
-
-    if not desktop_available and find_desktop_installer(base_dir):
-        desktop_url = url_for("main.download_desktop")
-        desktop_available = True
+    desktop_available = bool(configured_desktop) or find_desktop_installer(base_dir) is not None
+    desktop_url = url_for("main.download_desktop") if desktop_available else ""
 
     mobile_available = bool(configured_mobile)
 

@@ -18,7 +18,6 @@
     <a
       href="{{ desktop_app_url or '#' }}"
       class="home-app-links__link{% if not desktop_download_available %} home-app-links__link--pending{% endif %}"
-      {% if desktop_download_available %}download{% endif %}
       {% if not desktop_download_available %}aria-disabled="true" tabindex="-1"{% endif %}
     >
       <img
