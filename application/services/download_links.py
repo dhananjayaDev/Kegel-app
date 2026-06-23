@@ -27,9 +27,15 @@ def find_desktop_installer(base_dir: Path) -> Path | None:
     return None
 
 
+def _config_str(config: Any, key: str) -> str:
+    if hasattr(config, "get"):
+        return (config.get(key, "") or "").strip()
+    return (getattr(config, key, "") or "").strip()
+
+
 def resolve_download_links(config: Any) -> dict[str, str | bool]:
-    configured_desktop = (getattr(config, "DESKTOP_APP_URL", "") or "").strip()
-    configured_mobile = (getattr(config, "MOBILE_APP_URL", "") or "").strip()
+    configured_desktop = _config_str(config, "DESKTOP_APP_URL")
+    configured_mobile = _config_str(config, "MOBILE_APP_URL")
     base_dir = config.get("BASE_DIR", Config.BASE_DIR) if hasattr(config, "get") else Config.BASE_DIR
 
     desktop_url = configured_desktop
